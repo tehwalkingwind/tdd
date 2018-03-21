@@ -11,9 +11,25 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>9</java.version>
+        <java.version>10</java.version>
     </properties>
-    
+
+    <!-- ./lib as repository -->
+    <repositories>
+        <repository>
+            <id>lib</id>
+            <name>lib</name>
+            <releases>
+                <enabled>true</enabled>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <url>file://${project.basedir}/lib</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <!-- COMMON LIBS (Log4J2 & Vavr) -->
         <dependency>
@@ -47,36 +63,12 @@
             <version>LATEST</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>LATEST</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency><!-- Only required to run tests in an IDE that bundles an older version -->
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-launcher</artifactId>
-            <version>LATEST</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency><!-- Only required to run tests in an IDE that bundles an older version -->
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>LATEST</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency><!-- Only required to run tests in an IDE that bundles an older version -->
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-            <version>LATEST</version>
-            <scope>test</scope>
-        </dependency>
 
         <!-- CODE GENERATION (Lombok & CheckerFramework) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>LATEST</version>
+            <version>1.16.21</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -90,6 +82,7 @@
 
     <build>
         <plugins>
+
             <!-- COMPILER (Java9+ and lombok compatible) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -127,7 +120,7 @@
             <!-- SUREFIRE (compatible with JUnit 5+, Java 9+, Lombok) -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.21.0</version>
+                <version>2.19.1</version>
                 <configuration>
                     <argLine>--add-modules java.se.ee</argLine>
                     <includes>
@@ -194,36 +187,6 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- LOMBOK -->
-            <plugin>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok-maven-plugin</artifactId>
-                <version>1.16.20.0</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>delombok</goal>
-                        </goals>
-                        <configuration>
-                            <addOutputDirectory>false</addOutputDirectory>
-                            <sourceDirectory>src/main/java</sourceDirectory>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>test-delombok</id>
-                        <phase>generate-test-sources</phase>
-                        <goals>
-                            <goal>testDelombok</goal>
-                        </goals>
-                        <configuration>
-                            <addOutputDirectory>false</addOutputDirectory>
-                            <sourceDirectory>src/test/java</sourceDirectory>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

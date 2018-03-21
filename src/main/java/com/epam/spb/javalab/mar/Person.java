@@ -3,7 +3,6 @@ package com.epam.spb.javalab.mar;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.Wither;
-import lombok.experimental.var;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 
