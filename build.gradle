@@ -1,0 +1,36 @@
+apply plugin: 'java'
+
+group = 'com.epam.spb.javalab'
+version = '1.0-SNAPSHOT'
+
+sourceCompatibility = //10
+        targetCompatibility = 10
+
+repositories {
+    // for local libs
+    flatDir { dirs './lib' }
+
+    mavenLocal()
+    mavenCentral()
+    jcenter() // BinTray
+}
+
+dependencies {
+
+    compile 'org.apache.logging.log4j:log4j-slf4j-impl:+',
+            'io.vavr:vavr:+'
+
+    testCompile 'org.junit.jupiter:junit-jupiter-params:+',
+            'org.hamcrest:java-hamcrest:+',
+            'org.mockito:mockito-all:+'
+
+    compileOnly name: ':lombok-edge:',
+            'edu.washington.cs.types.checker:checker-framework:+'
+}
+
+// type in terminal: gradle wrapper --gradle-version=4.6
+task wrapper(type: Wrapper) {
+    description = 'Generates gradlew[.bat] scripts'
+    gradleVersion = '4.6'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
